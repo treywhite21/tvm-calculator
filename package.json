@@ -1,6 +1,6 @@
 {
   "name": "tvm-calculator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A library of financial calculator functions allowing easy incorporation of time value of money calculations into any application",
   "main": "lib/index.js",
   "dependencies": {},

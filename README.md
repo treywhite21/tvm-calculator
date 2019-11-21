@@ -57,6 +57,16 @@ const presentValue = tvmCalculator.calcPV(rate, nper, pmt, fv, isBeginning, isDi
 const paymentAmount = tvmCalculator.calcPMT(rate, nper, pv, fv, isBeginning, isDiscrete, cf, pf);
 ```
 
+Example:
+```js
+var tvmCalculator = require("tvm-calculator")
+
+const futureValue = tvmCalculator.calcPMT(4, 30, 100000, 0, false, true, 1, 1);
+
+console.log("Payment: ", futureValue);
+```
+Prints "Payment: -5783.01"
+
 ### calcFV
 ```js
 const futureValue = tvmCalculator.calcFV(rate, nper, pmt, pv, isBeginning, isDiscrete, cf, pf);

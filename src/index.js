@@ -54,7 +54,8 @@ const calcVars = (rate, nper, isBeginning, isDiscrete, cf, pf) => {
 	return { rateEff, x, a, b };
 };
 
-export const calcPV = (rate, nper, pmt, fv, isBeginning = false, isDiscrete = true, cf = 12, pf = 12) => {
+export const calcPV = params => {
+	const { rate, nper, pmt, fv, isBeginning = false, isDiscrete = true, cf = 12, pf = 12 } = params;
 	const vars = calcVars(rate, nper, isBeginning, isDiscrete, cf, pf);
 	const { rateEff, a, b } = vars;
 	let pv;
@@ -70,7 +71,8 @@ export const calcPV = (rate, nper, pmt, fv, isBeginning = false, isDiscrete = tr
 	return pv.toFixed(2);
 };
 
-export const calcFV = (rate, nper, pmt, pv, isBeginning = false, isDiscrete = true, cf = 12, pf = 12) => {
+export const calcFV = params => {
+	const { rate, nper, pmt, pv, isBeginning = false, isDiscrete = true, cf = 12, pf = 12 } = params;
 	const vars = calcVars(rate, nper, isBeginning, isDiscrete, cf, pf);
 	const { rateEff, a, b } = vars;
 	let fv;
@@ -86,7 +88,8 @@ export const calcFV = (rate, nper, pmt, pv, isBeginning = false, isDiscrete = tr
 	return fv.toFixed(2);
 };
 
-export const calcPMT = (rate, nper, pv, fv, isBeginning = false, isDiscrete = true, cf = 12, pf = 12) => {
+export const calcPMT = params => {
+	const { rate, nper, pv, fv, isBeginning = false, isDiscrete = true, cf = 12, pf = 12 } = params;
 	const vars = calcVars(rate, nper, isBeginning, isDiscrete, cf, pf);
 	const { rateEff, a, b } = vars;
 	let pmt;
@@ -100,7 +103,8 @@ export const calcPMT = (rate, nper, pv, fv, isBeginning = false, isDiscrete = tr
 	return pmt.toFixed(2);
 };
 
-export const calcNPer = (rate, pmt, pv, fv, isBeginning = false, isDiscrete = true, cf = 12, pf = 12) => {
+export const calcNPer = params => {
+	const { rate, pmt, pv, fv, isBeginning = false, isDiscrete = true, cf = 12, pf = 12 } = params;
 	const vars = calcVars(rate, 0, isBeginning, isDiscrete, cf, pf);
 	const { rateEff, b } = vars;
 	let nper;
@@ -230,7 +234,8 @@ const iNewton3 = (nper, pmt, pv, fv, isBeginning, isDiscrete, cf, pf) => {
 	return iNew;
 };
 
-export const calcInterestRate = (nper, pmt, pv, fv, isBeginning = false, isDiscrete = true, cf = 12, pf = 12) => {
+export const calcInterestRate = params => {
+	const { nper, pmt, pv, fv, isBeginning = false, isDiscrete = true, cf = 12, pf = 12 } = params;
 	let rate;
 
 	if (pmt === 0) {
