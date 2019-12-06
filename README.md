@@ -19,57 +19,95 @@ or
 ```js
 var tvmCalculator = require('tvm-calculator');
 
-// Calculate future value of investment
-const periodicPayment = tvmCalculator.calcPMT(
-    interestRate, // Number: Interest Rate
-    numberPayments, // Number: Number of Payments
-    presentValue, // Number: Present Value
-    futureValue, // Number: Future Value
-    isBeginning, // Boolean: Is payment made at the BEGINNING of period? (false if END)
-    isDiscrete, // Boolean: Is compounding DISCRETE? (false if CONTINUOUS)
-    compoundingFrequency, // Number: Compounding Frequency (12 for monthly)
-    paymentFrequency // Number: Payment Frequency
-);
+// Specify params as object
+const tvmParams = { pv: -100000, fv: 0, nper: 30, rate: 4 };
 
+// Calculate payment amount of a loan
+const periodicPayment = tvmCalculator.calcPMT(tvmParams);
+
+// Log calculated result (3508.33)
 console.log('Payment amount (PMT): ', periodicPayment);
 ```
+
+## Parameters
+Parameters are listed below. When solving for a value such as PMT, that parameter can be omitted.
+Parameters specified as "Optional" will default to the values described below.
+All parameters should be passed in as a single object.
+
+rate, // Number: Interest Rate as whole number
+nper, // Number: Number of Periods in term
+pmt, // Number: Payment Amount
+pv, // Number: Present Value (should be entered as negative)
+fv, // Number: Future Value
+isBeginning, // Boolean: Is payment made at the BEGINNING of period? (Optional: defaults to false)
+isDiscrete, // Boolean: Is compounding DISCRETE? (Optional: defaults to true)
+cf, // Number: Compounding Frequency (Optional: defaults to 12 for monthly)
+pf, // Number: Payment Frequency (Optional: defaults to 12 for monthly)
 
 ## Available Methods
 Example method calls listed below. Further details to come.
 
 ### calcNper
+Calculate number of periods.
+Required params: rate, pmt, pv, fv.
+
 ```js
-const numberPayments = tvmCalculator.calcNPer(rate, pmt, pv, fv, isBeginning, isDiscrete, cf, pf);
+const numberPeriods = tvmCalculator.calcNPer({ pv: -100000, fv: 0, pmt: 3508, rate: 4 });
+console.log('Number of Periods (N)', numberPeriods); // 30.00
 ```
 
 ### calcInterestRate
+Calculate interest rate.
+Required params: nper, pmt, pv, fv.
+
 ```js
-const interestRate = tvmCalculator.calcInterestRate(nper, pmt, pv, fv, isBeginning, isDiscrete, cf, pf) ;
+const interestRate = tvmCalculator.calcInterestRate({ pv: -100000, fv: 0, nper: 30, pmt: 3508 });
+console.log('Interest Rate (I/Y)', interestRate); // 3.993
 ```
 
 ### calcPV
+Calculate present value.
+Required params: nper, pmt, fv, rate.
+
 ```js
-const presentValue = tvmCalculator.calcPV(rate, nper, pmt, fv, isBeginning, isDiscrete, cf, pf);
+const presentValue = tvmCalculator.calcPV({ nper: 30, fv: 0, pmt: 3508, rate: 4 });
+console.log('Present Value (PV)', presentValue); // -99990.73
 ```
 
 ### calcPMT
+Calculate payment amount.
+Required params: nper, pv, fv, rate.
+
 ```js
-const paymentAmount = tvmCalculator.calcPMT(rate, nper, pv, fv, isBeginning, isDiscrete, cf, pf);
+const paymentAmount = tvmCalculator.calcPMT({ pv: -100000, fv: 0, nper: 30, rate: 4 });
+console.log('Payment Amount (PMT)', paymentAmount); // 3508.33
 ```
-
-Example:
-```js
-var tvmCalculator = require("tvm-calculator")
-
-const futureValue = tvmCalculator.calcPMT(4, 30, 100000, 0, false, true, 1, 1);
-
-console.log("Payment: ", futureValue);
-```
-Prints "Payment: -5783.01"
 
 ### calcFV
+Calculate future value.
+Required params: nper, pv, pmt, rate.
+
 ```js
-const futureValue = tvmCalculator.calcFV(rate, nper, pmt, pv, isBeginning, isDiscrete, cf, pf);
+const futureValue = tvmCalculator.calcFV({ pv: -100000, pmt: 3508, nper: 30, rate: 4 });
+console.log('Future Value (FV)', futureValue); // 10.24
+```
+
+
+Full Params Example:
+```js
+const tvmParams = {
+    pv: -100000,
+    fv: 0,
+    nper: 30,
+    rate: 4,
+    isBeginning: false,
+    isDiscrete: true,
+    cf: 1,
+    pf: 1,
+};
+const periodicPayment = tvmCalculator.calcPMT(tvmParams);
+
+console.log("Payment Amount (PMT): ", periodicPayment); // 5783.01
 ```
 
 ## To Do
